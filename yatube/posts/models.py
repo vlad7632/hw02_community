@@ -1,6 +1,5 @@
-from django.db import models
 from django.contrib.auth import get_user_model
-
+from django.db import models
 
 User = get_user_model()
 
@@ -21,11 +20,16 @@ class Post(models.Model):
         User,
         on_delete=models.CASCADE,
         verbose_name='Пользователь',
-        related_name='posts')
+        related_name='posts',
+    )
     group = models.ForeignKey(
         Group,
         blank=True,
         null=True,
-        on_delete=models.CASCADE,
+        on_delete=models.SET_NULL,
         verbose_name='Группа',
-        related_name='groups')
+        related_name='posts',
+    )
+
+    class Meta:
+        ordering = ['pub_date']
